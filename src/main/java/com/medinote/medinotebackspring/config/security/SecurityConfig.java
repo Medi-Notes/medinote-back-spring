@@ -60,32 +60,32 @@ public class SecurityConfig {
                 // 개발 환경에서 h2-console 사용하기 위한  임시 옵션
                 .headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/h2-console/**","/hello-world").permitAll()
+                        .requestMatchers("/h2-console/**","/api/v1/**","/hello-world").permitAll()
                         .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                         .requestMatchers("/api/**").authenticated()
                         .requestMatchers("/api/*/admin/**").hasAnyAuthority(RoleType.ADMIN.getCode())
                         .anyRequest().authenticated()
                 )
-                .oauth2Login(oauth -> oauth
-                                .authorizationEndpoint(endpoint -> endpoint
-                                        .baseUri("/oauth2/authorization")
-                                        .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
-                                )
-                                .redirectionEndpoint(endpoint -> endpoint
-                                        .baseUri("/*/oauth2/code/*")
-                                )
-                                .userInfoEndpoint(endpoint -> endpoint
-                                        .userService(oAuth2UserService)
-                                )
-                                .successHandler(oAuth2AuthenticationSuccessHandler())
-//                        .failureHandler(oAuth2AuthenticationFailureHandler())
-                )
-                .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                // 인증이 일어나지 않았을 경우 처리
-                .exceptionHandling(handling -> handling
-                        .authenticationEntryPoint(new RestAuthenticationEntryPoint())
-                        .accessDeniedHandler(tokenAccessDeniedHandler)
-                )
+//                .oauth2Login(oauth -> oauth
+//                                .authorizationEndpoint(endpoint -> endpoint
+//                                        .baseUri("/oauth2/authorization")
+//                                        .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
+//                                )
+//                                .redirectionEndpoint(endpoint -> endpoint
+//                                        .baseUri("/*/oauth2/code/*")
+//                                )
+//                                .userInfoEndpoint(endpoint -> endpoint
+//                                        .userService(oAuth2UserService)
+//                                )
+//                                .successHandler(oAuth2AuthenticationSuccessHandler())
+////                        .failureHandler(oAuth2AuthenticationFailureHandler())
+//                )
+//                .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+//                // 인증이 일어나지 않았을 경우 처리
+//                .exceptionHandling(handling -> handling
+//                        .authenticationEntryPoint(new RestAuthenticationEntryPoint())
+//                        .accessDeniedHandler(tokenAccessDeniedHandler)
+//                )
                 .build();
 
     }

@@ -3,6 +3,8 @@
 
 .env
 **/**/application-oauth2.properties
+**/**/application-aws.properties
+**/**/application-openai.properties
 
 
 ### Intellij+all ###

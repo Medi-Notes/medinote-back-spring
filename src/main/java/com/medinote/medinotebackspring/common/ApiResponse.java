@@ -23,6 +23,10 @@ public class ApiResponse<T> {
     private final ApiResponseHeader header;
     private final Map<String, T> body;
 
+
+    public static <T> ApiResponse<T> success() {
+        return new ApiResponse<>(new ApiResponseHeader(SUCCESS, SUCCESS_MESSAGE), null);
+    }
     public static <T> ApiResponse<T> success(String name, T body) {
         Map<String, T> map = new HashMap<>();
         map.put(name, body);
@@ -32,6 +36,13 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> fail() {
         return new ApiResponse<>(new ApiResponseHeader(FAILED, FAILED_MESSAGE), null);
+    }
+
+    public static <T> ApiResponse<T> fail(String name, T body) {
+        Map<String, T> map = new HashMap<>();
+        map.put(name, body);
+
+        return new ApiResponse<>(new ApiResponseHeader(FAILED, FAILED_MESSAGE), map);
     }
 
     public static <T> ApiResponse<T> invalidAccessToken() {

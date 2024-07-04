@@ -3,7 +3,12 @@ spring:
     name: "medinote-back-spring"
 
   profiles:
-    active: oauth2
+    active: oauth2, openai, aws
+
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      max-request-size: 30MB
 
   h2:
     console:
@@ -93,6 +98,18 @@ app:
     authorized-redirect-uris:
       - http://localhost:5173/oauth2/redirect
 
+
 #logging:
 #  level:
 #    org.springframework: info
+openai:
+  api-key: ${API-KEY}
+  gpt-model: ${GPT-MODEL}
+  audio-model: ${WHISPER-MODEL}
+  urls:
+    base-url: https://api.openai.com/v1
+    chat-url: /chat/completions
+    transcription-url: /audio/transcriptions
+
+s3:
+  bucket-name: ${S3.BUCKET-NAME}
