@@ -55,14 +55,14 @@ public class OpenAIProperties {
             ---
                             
             Record2 : %s
-            subgoal : Mark awkward sentences or words in square brackets in Record 1
+            Subgoal : Mark awkward sentences or words in square brackets in Record 1
                             
             Do not include an explanation in parentheses after the modified word.
             Consider the subgoals sequentially, as shown in the above example
             Do not arbitrarily omit or summarize lecture content.
-            return most be string after "Correction2 :" and exclude "Correction2 :"
+            return most be string about "Correction2 :" and exclude string "Correction2 :"
             
-            Correction2 :""".formatted(rawText);
+            Correction2 : ???""".formatted(rawText);
 //        return """
 //                ---
 //                Record 1 : 로비 이라는 게 있습니다. 알비올라 로비올 있고 거기서 만들어진 제지 덕트를 따라서 쭉 올라와서 유두 아래쪽에 있는 티페어 사이너스로 해서 결국은 유도로 계구를 하게 되는데 이 하나하나의 시드는 제가 보통 표현할 때 포도 성이 이런 식으로 보통 환자들한테 많이 얘기를 하는데

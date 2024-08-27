@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "MEDINOTES")
+@Table(name = "MEDINOTES", indexes=@Index(name="idx_user_id",columnList = "USER_ID"))
 public class Medinote {
 //    @JsonIgnore
     @Id
@@ -24,9 +24,10 @@ public class Medinote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long medinoteSeq;
 
-//    @ManyToOne
-//    @JoinColumn(name = "userId")
-//    private User userId;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User userId;
 
     @Column(name = "MEDINOTE_TITLE")
     @Size(max = 200)
@@ -49,10 +50,15 @@ public class Medinote {
     @Size(min = 1, max = 1)
     private String transformFin;
 
+    @OneToOne(mappedBy = "medinote", cascade = CascadeType.ALL, orphanRemoval = true)
+    private MedinoteMetadata medinoteMetadata;
+
     public Medinote(
-            String medinoteTitle
+            String medinoteTitle,
+            User user
     ) {
         this.medinoteTitle = medinoteTitle;
+        this.userId = user;
         this.medinoteText = medinoteText;
         this.createdAt = LocalDateTime.now();
         this.modifiedAt = LocalDateTime.now();

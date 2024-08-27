@@ -14,6 +14,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -41,12 +43,14 @@ public class AuthController {
         if (!authToken.validate()) {
             return ApiResponse.invalidAccessToken();
         }
+//        log.warn("====== 토큰이 valid 합니다!!!!!! ======");
 
         // expired access token 인지 확인
         Claims claims = authToken.getExpiredTokenClaims();
         if (claims == null) {
             return ApiResponse.notExpiredTokenYet();
         }
+
 
         String userId = claims.getSubject();
         RoleType roleType = RoleType.of(claims.get("role", String.class));

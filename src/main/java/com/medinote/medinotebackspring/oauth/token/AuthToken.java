@@ -56,6 +56,8 @@ public class AuthToken {
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
+        } catch (SignatureException e) { // deprecated 됐는데 왜 잡히지? 일단 두자
+            log.warn("JWT 서명이 유효하지 않습니다.");
         } catch (SecurityException e) {
             log.info("Invalid JWT signature.");
         } catch (MalformedJwtException e) {

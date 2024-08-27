@@ -7,13 +7,16 @@ import com.medinote.medinotebackspring.api.repository.medinote.MedinoteRepositor
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MedinoteService {
     private final MedinoteRepository medinoteRepository;
 
-    public Medinote getNoteInfo(String title) {
-        return medinoteRepository.findByMedinoteTitle(title);
+    public List<Medinote> getMedinotes(User userId) {
+        return medinoteRepository.findMedinotesByUserId(userId);
     }
 //    public Medinote getNoteInfo(User userId, String title) {
 //        return medinoteRepository.findByUserIdAndMedinoteTitle(userId,title);
@@ -25,5 +28,17 @@ public class MedinoteService {
 
     public void putMedinote(Medinote medinote) {
         medinoteRepository.save(medinote);
+    }
+
+    public void deleteMedinote(Long medinoteSeq) {
+        medinoteRepository.delete(
+                medinoteRepository.findByMedinoteSeq(medinoteSeq)
+        );
+    }
+
+    public void deleteMedinotes(List<Long> seqs) {
+        for (Long seq : seqs) {
+            deleteMedinote(seq);
+        }
     }
 }

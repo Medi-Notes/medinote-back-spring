@@ -2,6 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,gradle,macos,intellij+all
 
 .env
+.logs
 **/**/application-oauth2.properties
 **/**/application-aws.properties
 **/**/application-openai.properties

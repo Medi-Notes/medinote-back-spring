@@ -3,6 +3,7 @@ package com.medinote.medinotebackspring.api.controller;
 import com.medinote.medinotebackspring.api.entity.User;
 import com.medinote.medinotebackspring.api.service.UserService;
 import com.medinote.medinotebackspring.common.ApiResponse;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;

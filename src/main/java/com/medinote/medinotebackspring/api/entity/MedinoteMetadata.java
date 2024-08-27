@@ -23,7 +23,7 @@ public class MedinoteMetadata {
     private Long medinoteSeq;
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "medinoteSeq")
     private Medinote medinote;

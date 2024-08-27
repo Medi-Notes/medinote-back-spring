@@ -6,6 +6,8 @@ import com.medinote.medinotebackspring.api.repository.medinote.MedinoteMetadataR
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MedinoteMetadataService {

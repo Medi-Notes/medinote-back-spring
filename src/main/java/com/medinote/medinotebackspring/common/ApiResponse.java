@@ -54,6 +54,6 @@ public class ApiResponse<T> {
     }
 
     public static <T> ApiResponse<T> notExpiredTokenYet() {
-        return new ApiResponse<>(new ApiResponseHeader(FAILED, NOT_EXPIRED_TOKEN_YET), null);
+        return new ApiResponse<>(new ApiResponseHeader(202, NOT_EXPIRED_TOKEN_YET), null);
     }
 }

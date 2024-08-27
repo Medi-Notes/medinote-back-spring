@@ -2,13 +2,18 @@ package com.medinote.medinotebackspring.api.controller;
 
 import com.medinote.medinotebackspring.api.entity.Medinote;
 import com.medinote.medinotebackspring.api.entity.MedinoteMetadata;
+import com.medinote.medinotebackspring.api.entity.User;
 import com.medinote.medinotebackspring.api.service.MedinoteMetadataService;
 import com.medinote.medinotebackspring.api.service.MedinoteService;
+import com.medinote.medinotebackspring.api.service.UserService;
 import com.medinote.medinotebackspring.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/medinote")
@@ -16,6 +21,7 @@ import java.time.LocalDateTime;
 public class MedinoteController {
     private final MedinoteService medinoteService;
     private final MedinoteMetadataService medinoteMetadataService;
+    private final UserService userService;
 
     @PostMapping("/upload")
     public ApiResponse<Object> uploadMedinote() {
@@ -37,10 +43,22 @@ public class MedinoteController {
     }
 
     @GetMapping
-    public Medinote retrieveMedinoteByTitle() {
-        Medinote note = medinoteService.getNoteInfo("테스트 제목 1111");
+    public List<Medinote> retrieveMedinotesByUserId() {
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUser(principal.getUsername());
 
-        return note;
+        List<Medinote> medinotes = medinoteService.getMedinotes(user);
+
+        return medinotes;
+    }
+
+    @DeleteMapping("/delete")
+    public ApiResponse<Object> deleteMedinoteBySeqs(@RequestBody Map<String, List<Long>> seqsMap) {
+        List<Long> medinoteSeqs = seqsMap.get("medinoteSeqs");
+        System.out.println(medinoteSeqs);
+        medinoteService.deleteMedinotes(medinoteSeqs);
+
+        return ApiResponse.success();
     }
 
     @GetMapping("/{id}")

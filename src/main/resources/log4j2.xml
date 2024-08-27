@@ -7,10 +7,27 @@
         <Console name="ConsoleLog" target="SYSTEM_OUT">
             <PatternLayout pattern="%green{%d{HH:mm:ss.SSS}} %magenta{[%t]} %highlight{%-5level} %yellow{%logger{36}} - %msg%n" charset="UTF-8"/>
         </Console>
+
+        <RollingFile name="SaveLogFile">
+            <FileName>./logs/medinote.log</FileName>
+            <FilePattern>./logs/%d{yyyy-MM-dd-HH-mm}.log</FilePattern>
+            <PatternLayout pattern="%d{yyyy-MMM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" charset="UTF-8"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+            <DefaultRolloverStrategy max="7" fileIndex="max" >
+                <Delete basePath = "{./logs}" maxDepth = "1">
+                    <!-- 3일이 경과한 로그파일은 자동 삭제 -->
+                    <IfLastModified age = "3d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
     </Appenders>
     <Loggers>
         <Root level="info">
             <AppenderRef ref="ConsoleLog" />
+            <AppenderRef ref="SaveLogFile" />
         </Root>
+        <Logger name="org.apache.http.wire" level="OFF" additivity="false"/>
     </Loggers>
 </Configuration>

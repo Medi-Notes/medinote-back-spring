@@ -13,5 +13,5 @@ public interface MedinoteRepository extends JpaRepository<Medinote, Long> {
     Medinote findByMedinoteTitle(String medinoteTitle);
     Medinote findByMedinoteSeq(Long medinoteSeq);
 
-//    List<Medinote> findMedinotesByUserId(User userId)
+    List<Medinote> findMedinotesByUserId(User userId);
 }

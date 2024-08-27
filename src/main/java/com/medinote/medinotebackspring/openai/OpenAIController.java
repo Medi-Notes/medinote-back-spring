@@ -2,6 +2,7 @@ package com.medinote.medinotebackspring.openai;
 
 import com.medinote.medinotebackspring.api.entity.Medinote;
 import com.medinote.medinotebackspring.api.entity.MedinoteMetadata;
+import com.medinote.medinotebackspring.api.entity.User;
 import com.medinote.medinotebackspring.api.service.MedinoteMetadataService;
 import com.medinote.medinotebackspring.api.service.MedinoteService;
 import com.medinote.medinotebackspring.api.service.S3Service;
@@ -12,6 +13,7 @@ import com.medinote.medinotebackspring.openai.response.WhisperTranscriptionRespo
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -92,27 +94,39 @@ public class OpenAIController {
     public ApiResponse<Object> audioToText(@RequestBody Map<String, String> filenameMap) throws IOException {
         String filename  = filenameMap.get("filename");
 
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUser(principal.getUsername());
+
         /*
         byte가 아니라 inputstream으로 바꿔야 될듯!!! (ok)
         나중에 userid로 변경 해야 됨
          */
-        InputStream audioFile = s3Service.getFileByInputStream("jiyun",filename);
+
+        try {
+            InputStream audioFile = s3Service.getFileByInputStream(user.getUserId(), filename);
+
+            WhisperTranscriptionResponse response = openAIApiService.getAudioToTextResponse(audioFile,filename);
+
+            String sttText = response.getText();
+
+            MedinoteMetadata metadata = medinoteMetadataService.getMetadataByAudioFilename(filename);
+            metadata.setSttText(sttText);
+
+            medinoteMetadataService.putMedinoteMetadata(metadata);
+
+//        log.error(metadata.getMedinoteSeq()+ " / "+ metadata.getAudioFilename());
+
+            return ApiResponse.success("metadata", metadata);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+
+            return ApiResponse.fail("errMessage","s3에서 파일 불러오기에 실패했습니다.");
+        }
 
 
 //        WhisperTranscriptionResponse response = openAIApiService.getAudioToTextResponse(file);
 //        WhisperTranscriptionResponse response = openAIApiService.getAudioToTextResponse(file.getInputStream(), file.getOriginalFilename(), file.getSize());
-        WhisperTranscriptionResponse response = openAIApiService.getAudioToTextResponse(audioFile,filename);
 
-        String sttText = response.getText();
-
-        MedinoteMetadata metadata = medinoteMetadataService.getMetadataByAudioFilename(filename);
-        metadata.setSttText(sttText);
-
-        medinoteMetadataService.putMedinoteMetadata(metadata);
-
-//        log.error(metadata.getMedinoteSeq()+ " / "+ metadata.getAudioFilename());
-
-        return ApiResponse.success("metadata", metadata);
     }
 
 //    @PostMapping(value = "/audio2text")
