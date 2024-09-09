@@ -2,8 +2,10 @@ spring:
   application:
     name: "medinote-back-spring"
 
-  profiles:
-    active: oauth2, openai, aws
+  config:
+    import: optional:file:.env[.properties]
+#  profiles:
+#    active: oauth2, openai, aws
 
   servlet:
     multipart:
@@ -89,13 +91,13 @@ app:
 #  level:
 #    org.springframework: info
 openai:
-  api-key: ${API-KEY}
-  gpt-model: ${GPT-MODEL}
-  audio-model: ${WHISPER-MODEL}
+  api-key: ${OPENAI-API-KEY}
+  gpt-model: "gpt-3.5-turbo"
+  audio-model: "whisper-1"
   urls:
     base-url: https://api.openai.com/v1
     chat-url: /chat/completions
     transcription-url: /audio/transcriptions
 
 s3:
-  bucket-name: ${S3.BUCKET-NAME}
+  bucket-name: ${S3-BUCKET-NAME}

@@ -6,6 +6,9 @@
     <Appenders>
         <Console name="ConsoleLog" target="SYSTEM_OUT">
             <PatternLayout pattern="%green{%d{HH:mm:ss.SSS}} %magenta{[%t]} %highlight{%-5level} %yellow{%logger{36}} - %msg%n" charset="UTF-8"/>
+            <Filters>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
         </Console>
 
         <RollingFile name="SaveLogFile">
@@ -24,7 +27,7 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Root level="info">
+        <Root level="debug">
             <AppenderRef ref="ConsoleLog" />
             <AppenderRef ref="SaveLogFile" />
         </Root>
