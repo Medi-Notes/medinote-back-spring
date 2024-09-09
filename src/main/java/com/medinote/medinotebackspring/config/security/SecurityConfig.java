@@ -60,8 +60,8 @@ public class SecurityConfig {
                 // 개발 환경에서 h2-console 사용하기 위한  임시 옵션
                 .headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(auth -> auth
-//                                .requestMatchers("/h2-console/**","/api/v1/auth/refresh").permitAll()
-                                .requestMatchers("/h2-console/**","/api/v1/**","/hello-world").permitAll()
+                                .requestMatchers("/h2-console/**","/api/v1/auth/refresh").permitAll()
+//                                .requestMatchers("/h2-console/**","/api/v1/**","/hello-world").permitAll()
                                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                                 .requestMatchers("/api/**").authenticated()
                                 .requestMatchers("/api/*/admin/**").hasAnyAuthority(RoleType.ADMIN.getCode())
@@ -140,7 +140,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://medinote-five.vercel.app"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setMaxAge(3600L);

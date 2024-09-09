@@ -78,7 +78,7 @@ public class OpenAIController {
     @PostMapping(value = "/audio2text", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ApiResponse<Object> audioToText(@RequestParam("file") MultipartFile file) throws IOException {
 
-        log.error("!!!!! file name: " + file);
+//        log.error("!!!!! file name: " + file);
 //        WhisperTranscriptionResponse response = openAIApiService.getAudioToTextResponse(file);
 //        WhisperTranscriptionResponse response = openAIApiService.getAudioToTextResponse(file.getInputStream(), file.getOriginalFilename(), file.getSize());
         WhisperTranscriptionResponse response = openAIApiService.getAudioToTextResponse(file.getBytes(), file.getOriginalFilename());
