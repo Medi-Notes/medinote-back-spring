@@ -60,7 +60,7 @@ public class SecurityConfig {
                 // 개발 환경에서 h2-console 사용하기 위한  임시 옵션
                 .headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/h2-console/**","/api/v1/auth/refresh").permitAll()
+                                .requestMatchers("/hello-world","/api/v1/auth/refresh").permitAll()
 //                                .requestMatchers("/h2-console/**","/api/v1/**","/hello-world").permitAll()
                                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                                 .requestMatchers("/api/**").authenticated()

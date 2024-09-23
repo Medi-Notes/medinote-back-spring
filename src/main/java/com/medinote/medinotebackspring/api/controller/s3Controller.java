@@ -40,6 +40,7 @@ public class s3Controller {
         User user = userService.getUser(principal.getUsername());
 
         String filename = file.getOriginalFilename();
+
         String uuidFilename = UUID.randomUUID() + UUID_DIVEDER + filename;
 
 

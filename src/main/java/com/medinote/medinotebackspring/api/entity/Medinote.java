@@ -25,7 +25,7 @@ public class Medinote {
     private Long medinoteSeq;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private User userId;
 
@@ -33,8 +33,7 @@ public class Medinote {
     @Size(max = 200)
     private String medinoteTitle;
 
-    @Column(name = "MEDINOTE_TEXT")
-    @Lob
+    @Column(name = "MEDINOTE_TEXT", columnDefinition = "mediumtext")
     private String medinoteText;
 
     @Column(name = "CREATED_AT")

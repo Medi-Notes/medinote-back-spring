@@ -32,8 +32,7 @@ public class MedinoteMetadata {
     @Size(max = 200)
     private String audioFilename;
 
-    @Column(name = "STT_TEXT")
-    @Lob
+    @Column(name = "STT_TEXT", columnDefinition = "mediumtext")
     private String sttText;
 
     public MedinoteMetadata(Medinote medinote, String audioFilename) {

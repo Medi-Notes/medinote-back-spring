@@ -1,19 +1,8 @@
 package com.medinote.medinotebackspring;
 
-import com.medinote.medinotebackspring.api.service.S3Service;
-import com.medinote.medinotebackspring.config.S3Config;
-import org.junit.jupiter.api.Test;
+import com.medinote.medinotebackspring.config.aws.S3Config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import software.amazon.awssdk.core.ResponseBytes;
-import software.amazon.awssdk.core.ResponseInputStream;
-import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.GetObjectRequest;
-import software.amazon.awssdk.services.s3.model.GetObjectResponse;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 @SpringBootTest
 public class S3ServiceTest {
