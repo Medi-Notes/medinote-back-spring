@@ -5,7 +5,7 @@
 <!--    </Properties>-->
     <Appenders>
         <Console name="ConsoleLog" target="SYSTEM_OUT">
-            <PatternLayout pattern="%green{%d{HH:mm:ss.SSS}{Asia/Seoul} %magenta{[%t]} %highlight{%-5level} %yellow{%logger{36}} - %msg%n" charset="UTF-8"/>
+            <PatternLayout pattern="%green{%d{HH:mm:ss.SSS}{Asia/Seoul}} %magenta{[%t]} %highlight{%-5level} %yellow{%logger{36}} - %msg%n" charset="UTF-8"/>
             <Filters>
                 <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
