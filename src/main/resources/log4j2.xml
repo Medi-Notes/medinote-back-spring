@@ -5,7 +5,7 @@
 <!--    </Properties>-->
     <Appenders>
         <Console name="ConsoleLog" target="SYSTEM_OUT">
-            <PatternLayout pattern="%green{%d{HH:mm:ss.SSS}} %magenta{[%t]} %highlight{%-5level} %yellow{%logger{36}} - %msg%n" charset="UTF-8"/>
+            <PatternLayout pattern="%green{%d{HH:mm:ss.SSS}{Asia/Seoul} %magenta{[%t]} %highlight{%-5level} %yellow{%logger{36}} - %msg%n" charset="UTF-8"/>
             <Filters>
                 <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
@@ -14,7 +14,7 @@
         <RollingFile name="SaveLogFile">
             <FileName>./logs/medinote.log</FileName>
             <FilePattern>./logs/%d{yyyy-MM-dd-HH}.log</FilePattern>
-            <PatternLayout pattern="%d{yyyy-MMM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" charset="UTF-8"/>
+            <PatternLayout pattern="%d{yyyy-MMM-dd HH:mm:ss}{Asia/Seoul} [%t] %-5level %logger{36} - %msg%n" charset="UTF-8"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true" />
             </Policies>
