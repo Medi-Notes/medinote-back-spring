@@ -22,10 +22,8 @@ public class SQSController {
         org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUser(principal.getUsername());
 
-        String userId = user.getUserId();
         String filename = sqsMap.get("filename");
-
-        String message = String.format("%s@%s",userId,filename);
+        String message = String.format("%s@%s",user.getUserId(),filename);
 
         try {
             sqsService.sendMessage(message);

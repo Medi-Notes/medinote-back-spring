@@ -6,12 +6,13 @@ import com.medinote.medinotebackspring.api.entity.User;
 import com.medinote.medinotebackspring.api.repository.medinote.MedinoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MedinoteService {
     private final MedinoteRepository medinoteRepository;
 
@@ -26,16 +27,19 @@ public class MedinoteService {
         return medinoteRepository.findByMedinoteSeq(seq);
     }
 
+    @Transactional
     public void putMedinote(Medinote medinote) {
         medinoteRepository.save(medinote);
     }
 
+    @Transactional
     public void deleteMedinote(Long medinoteSeq) {
         medinoteRepository.delete(
                 medinoteRepository.findByMedinoteSeq(medinoteSeq)
         );
     }
 
+    @Transactional
     public void deleteMedinotes(List<Long> seqs) {
         for (Long seq : seqs) {
             deleteMedinote(seq);

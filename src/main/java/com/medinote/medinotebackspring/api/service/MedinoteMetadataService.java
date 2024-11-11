@@ -5,11 +5,11 @@ import com.medinote.medinotebackspring.api.entity.MedinoteMetadata;
 import com.medinote.medinotebackspring.api.repository.medinote.MedinoteMetadataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MedinoteMetadataService {
     private final MedinoteMetadataRepository medinoteMetadataRepository;
 
@@ -21,6 +21,7 @@ public class MedinoteMetadataService {
         return medinoteMetadataRepository.getByAudioFilename(audioFilename);
     }
 
+    @Transactional
     public void putMedinoteMetadata(MedinoteMetadata meta) {
         medinoteMetadataRepository.save(meta);
     }
